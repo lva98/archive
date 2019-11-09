@@ -1,0 +1,26 @@
+{
+  "name": "projeto_redes",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Barbara",
+  "license": "MIT",
+  "main": "src/app.js",
+  "keywords": [
+    "nodejs",
+    "bootstrap",
+    "express"
+  ],
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^2.7.1",
+    "express": "^4.16.4",
+    "express-ejs-layouts": "^2.5.0",
+    "express-formidable": "^1.2.0",
+    "express-session": "^1.17.0",
+    "formidable": "^1.2.1",
+    "moment": "^2.24.0",
+    "mysql": "^2.17.1",
+    "node-cmd": "^3.0.0",
+    "node-session": "^1.2.1"
+  }
+}

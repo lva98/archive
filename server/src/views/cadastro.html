@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Cadastro</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <form action="cadastrar" method="post">
+        <table>
+            <tr> <td colspan="4" style="text-align: center;"> Cadastro </td> </tr>
+
+            <tr>
+                <td> Email </td>
+                <td>
+                    <input type="email" name="email" placeholder="meu@email.com" required>
+                </td>
+            </tr>
+
+            <tr>
+                <td> Senha </td>
+                <td>
+                    <input type="password" name="senha1" placeholder="Senha" required>
+                </td>
+            </tr>
+
+            <tr>
+                <td> Confirmação </td>
+                <td>
+                    <input type="password" name="senha2" placeholder="Senha" required>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="4" style="text-align: right;">
+                    <button type="button" onclick="window.location.href = 'login'">voltar</button>
+                    <input type="submit">
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

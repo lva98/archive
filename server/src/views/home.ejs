@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Cadastro</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+	<table>
+		<tr>
+			<th colspan="2"> Logado como</th>
+		</tr>
+		<tr>
+			<th> <%= usuario.email %> </th>
+			<th> <button onclick="window.location.href = 'sair'"> sair </button> </th>
+		</tr>
+	</table>
+	<br>
+
+	<table>
+		<tr>
+			<th colspan="2"> Upload </th>
+		</tr>
+		<tr>
+			<form action="home/upload" method="post" enctype="multipart/form-data">
+				<th> <input type="file" name="arquivo" value="upload" required accept=".c"/> </th>
+				<th> <input type="submit" value="Enviar"> </th>
+			</form>
+		</tr>
+	</table>
+
+	<br>
+	<table>
+		<tr>
+			<th colspan=6> Meus arquivos </th>
+		</tr>
+		<tr>
+			<th> # </th>
+			<th> Arquivo </th>
+			<th> Data modificação </th>
+			<th colspan="3"> Ação </th>
+		</tr>
+		<% for(var i=0; i < data.length; i++) { %>
+			<tr>
+			  <td> <%= i+1 %> </td>
+			  <td> <%= data[i].nome %> </td>
+			  <td> <%= data[i].modificado %> </td>
+			  <td> <a href="home/arquivo/<%= data[i].id %>" target="_blank"> abrir </a> </td>
+			  <td> <a href="home/download/<%= data[i].id %>" target="_blank"> download </a> </td>
+			  <td> <a href="home/deletar/<%= data[i].id %>"> deletar </a> </td>
+			</tr>
+		 <% } %>
+	</table>
+</body>
+</html>

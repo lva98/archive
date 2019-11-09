@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Archive</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        .boxsizingBorder {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+                    box-sizing: border-box;
+        }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+
+</head>
+<body>
+	<table>
+		<tr>
+			<th colspan=2><%=nome%></th>
+		</tr>
+		<tr>
+			<td> 
+                <div style="margin-bottom: 2px;">
+                    <button id="menu" type="button" onclick="menu()"> Menu </button>
+                    <button id="salvar" type="button" onclick="salvar()"> Salvar </button>
+                    <button type="button" onclick="executar()"> Executar </button>
+                </div>
+                <textarea id="codigo" rows="50" style="width: 480px; white-space: pre;"><%=arquivo%></textarea>
+            </td>
+
+            <td>
+                Entrada <br>
+                <textarea id="entrada" rows="20" style="width: 360px;"></textarea>
+                <br>
+                Saida <br>
+                <textarea id="saida" rows="20" style="width: 360px;" readonly></textarea>
+            </td>
+		</tr>
+    </table>
+    
+    <script>
+        var textareas = document.getElementsByTagName('textarea');
+        var count = textareas.length;
+
+        //Função pronta da internet pra fazer tab em textarea
+        for(var i=0;i<count;i++){
+            textareas[i].onkeydown = function(e){
+                if(e.keyCode==9 || e.which==9){
+                    e.preventDefault();
+                    var s = this.selectionStart;
+                    this.value = this.value.substring(0,this.selectionStart) + "    " + this.value.substring(this.selectionEnd);
+                    this.selectionEnd = s+4; 
+                }
+            }
+        }
+
+        function salvar() {
+            var codigo = document.getElementById("codigo").value;
+            document.getElementById("salvar").innerHTML = "Carregando...";
+            $.ajax({
+                url: 'http://localhost:8000/salvar',
+                method: 'POST',
+                contentType : "application/json",
+                dataType : 'json',
+                data: JSON.stringify({
+                    id_usuario: "<%=usuario.id%>",
+                    email: "<%=usuario.email%>",
+                    nome: "<%=nome%>",
+                    arquivo: codigo,
+                }),
+                success: function(data) {
+                    document.getElementById("salvar").innerHTML = "Salvar";
+                },
+            });
+        }
+
+        function executar() {
+            var codigo = document.getElementById("codigo").value;
+            var entrada = document.getElementById("entrada").value;
+            document.getElementById("saida").innerHTML = "Carregando...";
+            $.ajax({
+                url: 'http://localhost:8000/executar',
+                method: 'POST',
+                contentType : "application/json",
+                dataType : 'json',
+                data: JSON.stringify({
+                    id_usuario: "<%=usuario.id%>",
+                    email: "<%=usuario.email%>",
+                    nome: "<%=nome%>",
+                    arquivo: codigo,
+                    entrada: entrada,
+                }),
+                success: function(data) {
+                    document.getElementById("saida").innerHTML = data.info;
+                },
+                error: function(data) {
+                    document.getElementById("saida").innerHTML = data.responseJSON.info;
+                },
+            });
+        }
+
+        function menu() {
+            window.location = "/home"
+        }
+    </script>
+</body>
+</html>

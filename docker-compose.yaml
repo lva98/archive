@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  
+  db:
+    container_name: container_dados
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=odaw
+      - MYSQL_USER=odaw
+      - MYSQL_PASSWORD=odaw
+      - MYSQL_DATABASE=projeto_odaw
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db:/var/lib/mysql
+  
+  web:
+    container_name: container_web
+    build:
+      context: ./server
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./server:/home/node/app
+      - ./arquivos:/home/node/arquivos
+    links:
+      - db
+  

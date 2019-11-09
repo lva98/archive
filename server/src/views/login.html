@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Login</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+</head>
+<body>
+    <form action="autenticar" method="post">
+        <table>
+            <tr> <td colspan="4" style="text-align: center;"> Login </td> </tr>
+
+            <tr>
+                <td> Email </td>
+                <td>
+                    <input type="text" name="email" placeholder="meu@email.com" required>
+                </td>
+            </tr>
+
+            <tr>
+                <td> Senha </td>
+                <td>
+                    <input type="password" name="senha" placeholder="Senha" required>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="4" style="text-align: right;">
+                    <button type="button" onclick="buttonCadastroClick()"> Cadastrar </button>
+                    <input type="submit" value="Entrar">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <script>
+        function buttonCadastroClick() {
+            window.location.href='cadastro';
+        }
+    </script>
+</body>
+</html>
