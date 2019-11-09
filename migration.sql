@@ -1,19 +1,11 @@
---------------------------------------------------------
-
-Criar tabela usuário:
-
-CREATE TABLE `projeto_redes`.`usuario` (
+CREATE TABLE `projeto_odaw`.`usuario` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(45) NULL,
   `senha` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC));
 
---------------------------------------------------------
-
-Criar tabela arquivos:
-
-CREATE TABLE `projeto_redes`.`arquivo` (
+CREATE TABLE `projeto_odaw`.`arquivo` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `id_usuario` INT NULL,
   `nome` VARCHAR(45) NULL,
@@ -22,9 +14,7 @@ CREATE TABLE `projeto_redes`.`arquivo` (
   INDEX `id_usuario_idx` (`id_usuario` ASC),
   CONSTRAINT `id_usuario`
     FOREIGN KEY (`id_usuario`)
-    REFERENCES `projeto_redes`.`usuario` (`id`)
+    REFERENCES `projeto_odaw`.`usuario` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
-
---------------------------------------------------------
 

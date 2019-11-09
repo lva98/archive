@@ -1,9 +1,8 @@
 version: '3'
 
 services:
-  
   db:
-    container_name: container_dados
+    container_name: archive-db
     image: mysql:5.7
     environment:
       - MYSQL_ROOT_PASSWORD=odaw
@@ -11,16 +10,16 @@ services:
       - MYSQL_PASSWORD=odaw
       - MYSQL_DATABASE=projeto_odaw
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - ./db:/var/lib/mysql
   
   web:
-    container_name: container_web
+    container_name: archive-web
     build:
       context: ./server
     ports:
-      - "8000:8000"
+      - "8080:8080"
     volumes:
       - ./server:/home/node/app
       - ./arquivos:/home/node/arquivos

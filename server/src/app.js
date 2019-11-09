@@ -76,9 +76,12 @@ app.get("/cadastro", function(request, response) {
 app.post("/home/upload", function(request, response) {
   var form = new formidable.IncomingForm();
   form.parse(request, function (erro, fields, files) {
-
-    let ext = files.arquivo.name.split('.')[1] || -1;
-    console.log(ext);
+    var ext;
+    if(typeof files.arquivo.name == 'undefined') 
+      ext = '-1';
+    else 
+      ext = files.arquivo.name.split('.')[1];
+    
     if(ext === '-1' || ext !== 'c' || erro) {
       response.render("mensagem", {
         titulo: "Erro",
@@ -345,6 +348,36 @@ app.post("/cadastrar", bodyParser.json(), bodyParser.urlencoded({ extended: true
   }
 });
 
+app.post("/home/novo", bodyParser.json(), bodyParser.urlencoded({ extended: true }), function(request, response) {
+  let id_usuario = request.session.data.usuario.id;
+  let email = request.session.data.usuario.email;
+  let nome = request.body.arquivo;
+
+  console.log(nome);
+  
+  banco.upload(id_usuario, nome, function(ret) {
+    if(ret.erro) {
+      response.render("mensagem", {
+        titulo: "Erro",
+        info: ret.data,
+        back: "/"
+      });
+    } else {
+      diretorio.upload(email, '', nome, '', function (ret) {
+        if(ret.erro) {
+          response.render("mensagem", {
+            titulo: "Erro",
+            info: ret.data,
+            back: "/"
+          });
+        } else {
+          response.redirect("/");
+        }
+      });
+    }
+  });
+});
+
 app.use(function(request, response, next) {
   response.status(404).render('mensagem', {
     titulo: 'Erro',
@@ -353,6 +386,6 @@ app.use(function(request, response, next) {
   })
 });
 
-app.listen(8000, function () {
-  console.log('Projeto redes rodando na PORTA 8000')
+app.listen(8080, function () {
+  console.log('Projeto redes rodando na PORTA 8080')
 });

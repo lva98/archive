@@ -23,30 +23,39 @@ const criar = function(email, func) {
 
 const upload = function(email, oldpath, nome, data, func) {
     var newpath = '/home/node/arquivos/' + email + '/' + nome;
-    fs.readFile(oldpath, function(erro, data) {
-        if(erro) {
-            func({
-                erro: true,
-                data: erro.message,
-            })
-        } else {
-            fs.writeFile(newpath, data, function (erro) {
-                if(erro) {
-                    func({
-                        erro: true,
-                        data: erro.message,
-                    });
-                } else {
-                    func({
-                        erro: false,
-                        data: "Arquivo salvo com sucesso",
-                    });
-                }
 
+    const salvar = () => {
+        fs.writeFile(newpath, data, function (erro) {
+            if(erro) {
+                func({
+                    erro: true,
+                    data: erro.message,
+                });
+            } else {
+                func({
+                    erro: false,
+                    data: "Arquivo salvo com sucesso",
+                });
+            }
+            
+            if(oldpath != '')
                 fs.unlinkSync(oldpath);
-            });
-        }
-    })
+        });
+    }
+
+    if (oldpath != '') {
+        fs.readFile(oldpath, function(erro, data) {
+            if(erro) {
+                func({
+                    erro: true,
+                    data: erro.message,
+                })
+            } else {
+                salvar();
+            }
+        });
+    } else 
+        salvar();
 }
 
 const salvar = function(email, nome, arquivo, func) {
@@ -91,7 +100,6 @@ const executar = function(email, arquivo, entrada, func) {
                         data: "Erro ao executar\n"+sterr,
                     })
                 } else {
-                    console.log(local_c);
                     func({
                         erro: false,
                         data: data.replace(local_c, "file.c"),

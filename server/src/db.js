@@ -2,7 +2,7 @@ var mysql = require('mysql');
 var moment = require('moment');
 
 var db = mysql.createConnection({
-	host     : 'container_dados',
+	host     : 'archive-db',
 	user     : 'odaw',
 	password : 'odaw',
 	database : 'projeto_odaw'
@@ -70,8 +70,8 @@ const upload = function(id_usuario, nome, func) {
             });
         } else {
             var sql = '';
-            moment.locale('pt-br'); 
-            var modificado = moment().format('YYYY-MM-DD HH:mm:ss');
+            //moment.locale('pt-br'); 
+            var modificado = moment().locale('pt-br').format('YYYY-MM-DD HH:mm:ss');
             if (results.length > 0) {
                 sql = `UPDATE arquivo SET modificado='${modificado}' WHERE id_usuario = ${id_usuario} and nome = "${nome}"`;
             } else {

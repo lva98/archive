@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Archive</title>
+    <title>Archive <%=nome%></title>
     <style>
         table, th, td {
             border: 1px solid black;
@@ -64,7 +64,7 @@
             var codigo = document.getElementById("codigo").value;
             document.getElementById("salvar").innerHTML = "Carregando...";
             $.ajax({
-                url: 'http://localhost:8000/salvar',
+                url: 'http://localhost:8080/salvar',
                 method: 'POST',
                 contentType : "application/json",
                 dataType : 'json',
@@ -85,7 +85,7 @@
             var entrada = document.getElementById("entrada").value;
             document.getElementById("saida").innerHTML = "Carregando...";
             $.ajax({
-                url: 'http://localhost:8000/executar',
+                url: 'http://localhost:8080/executar',
                 method: 'POST',
                 contentType : "application/json",
                 dataType : 'json',
