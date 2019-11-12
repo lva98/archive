@@ -13,25 +13,46 @@
             -moz-box-sizing: border-box;
                     box-sizing: border-box;
         }
+
+        #container {
+            height: 100%;
+            width: auto;
+            white-space: nowrap;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /*#htmleditor {
+            height: 100%;
+            min-height: 50vh;
+            width: 33%;
+            display: inline-block;
+        }*/
+
+
     </style>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-    crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.1/ace.js" type="text/javascript" charset="utf-8"></script>
 
 </head>
 <body>
+    <div id="container">
+        <!--div id="htmleditor"></div-->
+    </div>
 	<table>
 		<tr>
 			<th colspan=2><%=nome%></th>
 		</tr>
 		<tr>
-			<td> 
+			<td valign="top"> 
                 <div style="margin-bottom: 2px;">
                     <button id="menu" type="button" onclick="menu()"> Menu </button>
                     <button id="salvar" type="button" onclick="salvar()"> Salvar </button>
                     <button type="button" onclick="executar()"> Executar </button>
                 </div>
-                <textarea id="codigo" rows="50" style="width: 480px; white-space: pre;"><%=arquivo%></textarea>
+                <div id="htmleditor" style="width: 500px; height: 650px"><%=arquivo%></div>
+                <!--textarea id="codigo" rows="50" style="width: 480px; white-space: pre;"></textarea-->
             </td>
 
             <td>
@@ -44,7 +65,9 @@
 		</tr>
     </table>
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.1/ace.js" type="text/javascript" charset="utf-8"></script>
     <script>
+        var ace;
         var textareas = document.getElementsByTagName('textarea');
         var count = textareas.length;
 
@@ -61,10 +84,10 @@
         }
 
         function salvar() {
-            var codigo = document.getElementById("codigo").value;
+            var codigo = ace.getValue()//document.getElementById("codigo").value;
             document.getElementById("salvar").innerHTML = "Carregando...";
             $.ajax({
-                url: 'http://localhost:8080/salvar',
+                url: document.location.origin + '/salvar',
                 method: 'POST',
                 contentType : "application/json",
                 dataType : 'json',
@@ -75,17 +98,20 @@
                     arquivo: codigo,
                 }),
                 success: function(data) {
-                    document.getElementById("salvar").innerHTML = "Salvar";
+                    setTimeout(() => {document.getElementById("salvar").innerHTML = "Salvar"}, 250);
                 },
+                error: function(data) {
+                    alert("Erro ao salvar arquivo ", data);
+                }
             });
         }
 
         function executar() {
-            var codigo = document.getElementById("codigo").value;
+            var codigo = ace.getValue()//document.getElementById("codigo").value;
             var entrada = document.getElementById("entrada").value;
             document.getElementById("saida").innerHTML = "Carregando...";
             $.ajax({
-                url: 'http://localhost:8080/executar',
+                url: document.location.origin + '/executar',
                 method: 'POST',
                 contentType : "application/json",
                 dataType : 'json',
@@ -108,6 +134,18 @@
         function menu() {
             window.location = "/home"
         }
+
+        function setEditor() {
+            ace = ace.edit("htmleditor");
+            ace.setTheme("ace/theme/terminal");
+            ace.setKeyboardHandler("ace/keyboard/emacs");
+            ace.session.setMode("ace/mode/c_cpp");
+            ace.setFontSize("14px");
+            //eh.getSession().on('change', () => {
+            //    update();
+            //})
+        }
+        setEditor();
     </script>
 </body>
 </html>

@@ -12,7 +12,7 @@ services:
     ports:
       - "3307:3306"
     volumes:
-      - ./db:/var/lib/mysql
+      - ./db:/var/lib/mysql:rw
   
   web:
     container_name: archive-web
@@ -22,7 +22,6 @@ services:
       - "8080:8080"
     volumes:
       - ./server:/home/node/app
-      - ./arquivos:/home/node/arquivos
     links:
       - db
   

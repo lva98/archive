@@ -1,7 +1,7 @@
 FROM node:12.13.0-alpine
 RUN apk add gcc libc-dev
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app 
-RUN mkdir -p /home/node/arquivos && chown -R node:node /home/node/arquivos
+RUN mkdir -p /home/node/arquivos && chown -R node:node /home/node/arquivos 
 WORKDIR /home/node/app
 COPY package*.json ./
 RUN npm install -g nodemon && npm install
