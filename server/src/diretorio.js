@@ -76,39 +76,47 @@ const salvar = function(email, nome, arquivo, func) {
 }
 
 const executar = function(email, nome, arquivo, entrada, func) {
-    var dir = '/home/node/arquivos/' + email + '/';
-    var local_c = dir + 'user_temp.c';
-    var local_entry = dir + 'entry_temp.txt'
-    
-    fs.writeFileSync(local_c, arquivo);
-    fs.writeFileSync(local_entry, entrada);
+    if(arquivo.indexOf("fork") != -1 || arquivo.indexOf("system") != -1) {
+        func({
+            erro: true,
+            data: "Operação proibida",
+        });
+    } else {
+        var dir = '/home/node/arquivos/' + email + '/';
+        var local_c = dir + 'user_temp.c';
+        var local_entry = dir + 'entry_temp.txt'
+        
+        fs.writeFileSync(local_c, arquivo);
+        fs.writeFileSync(local_entry, entrada);
 
-    comando = 'gcc ' + local_c + ' -o ' + dir + 'user_temp';
-    cmd.get(comando, (erro, data, sterr) => {
-        if(erro) {
-            let msg = ("Erro ao compilar\n"+sterr).split(local_c).join(nome);
-            func({
-                erro: true,
-                data: msg,
-            })
-        } else {
-            comando = dir + 'user_temp < ' + local_entry;
-            cmd.get(comando, (erro, data, sterr) => {
-                if(erro) {
-                    
-                    func({
-                        erro: true,
-                        data: "Erro ao executar\n" + erro.code + ": " + erro.message + ".",
-                    })
-                } else {
-                    func({
-                        erro: false,
-                        data: data.replace(local_c, nome),
-                    })
-                }
-            });
-        }
-    });
+        comando = 'gcc ' + local_c + ' -o ' + dir + 'user_temp';
+
+        cmd.get(comando, (erro, data, sterr) => {
+            if(erro) {
+                let msg = ("Erro ao compilar\n"+sterr).split(local_c).join(nome);
+                func({
+                    erro: true,
+                    data: msg,
+                })
+            } else {
+                comando = dir + 'user_temp < ' + local_entry;
+                cmd.get(comando, (erro, data, sterr) => {
+                    if(erro) {
+                        
+                        func({
+                            erro: true,
+                            data: "Erro ao executar\n" + erro.code + ": " + erro.message + ".",
+                        })
+                    } else {
+                        func({
+                            erro: false,
+                            data: data.replace(local_c, nome),
+                        })
+                    }
+                });
+            }
+        });
+    }
 }
 
 const download = function(email, nome, func) {

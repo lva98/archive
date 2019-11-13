@@ -137,7 +137,7 @@ const deletar = function(id, id_usuario, func) {
 
 const download = function(id, id_usuario, func) {
     db.query('SELECT nome FROM arquivo WHERE id=? and id_usuario=?;', [id, id_usuario], function(erro, results, fields) {
-        if(erro) {
+        if(erro || results.length == 0) {
             func({
                 erro: true,
                 data: erro.message,
