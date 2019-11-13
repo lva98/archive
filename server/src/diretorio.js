@@ -75,7 +75,7 @@ const salvar = function(email, nome, arquivo, func) {
     });
 }
 
-const executar = function(email, arquivo, entrada, func) {
+const executar = function(email, nome, arquivo, entrada, func) {
     var dir = '/home/node/arquivos/' + email + '/';
     var local_c = dir + 'user_temp.c';
     var local_entry = dir + 'entry_temp.txt'
@@ -86,7 +86,7 @@ const executar = function(email, arquivo, entrada, func) {
     comando = 'gcc ' + local_c + ' -o ' + dir + 'user_temp';
     cmd.get(comando, (erro, data, sterr) => {
         if(erro) {
-            let msg = ("Erro ao compilar\n"+sterr).split(local_c).join("file.c");
+            let msg = ("Erro ao compilar\n"+sterr).split(local_c).join(nome);
             func({
                 erro: true,
                 data: msg,
@@ -95,14 +95,15 @@ const executar = function(email, arquivo, entrada, func) {
             comando = dir + 'user_temp < ' + local_entry;
             cmd.get(comando, (erro, data, sterr) => {
                 if(erro) {
+                    
                     func({
                         erro: true,
-                        data: "Erro ao executar\n"+sterr,
+                        data: "Erro ao executar\n" + erro.code + ": " + erro.message + ".",
                     })
                 } else {
                     func({
                         erro: false,
-                        data: data.replace(local_c, "file.c"),
+                        data: data.replace(local_c, nome),
                     })
                 }
             });

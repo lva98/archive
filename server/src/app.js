@@ -267,7 +267,7 @@ app.all("/executar", express.json(), (request, response) => {
   let arquivo = request.body.arquivo;
   let entrada = request.body.entrada
 
-  diretorio.executar(email, arquivo, entrada, (ret) => {
+  diretorio.executar(email, nome, arquivo, entrada, (ret) => {
     if(ret.erro) {
       response.status(500).json({
         info: ret.data,
