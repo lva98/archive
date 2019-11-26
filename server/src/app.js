@@ -24,7 +24,7 @@ app.use(
 
 app.use('/', function(request, response, next) {
   if(request.originalUrl != '/favicon.ico') {
-    console.log(request.headers['x-forwarded-for'] || request.connection.remoteAddress, '-',request.method, request.originalUrl);
+    console.log(request.connection.remoteAddress + ':' + request.connection.remotePort, '-',request.method, request.originalUrl);
   }
   next();
 });
@@ -387,5 +387,5 @@ app.use(function(request, response, next) {
 });
 
 app.listen(8080, function () {
-  console.log('Projeto redes rodando na PORTA 8080')
+  console.log('Archive rodando na PORTA 8080')
 });

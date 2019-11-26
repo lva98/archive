@@ -4,9 +4,13 @@
     <meta charset="utf-8">
     <title>Archive <%=nome%></title>
     <style>
-        table, th, td {
-            border: 1px solid black;
-        }
+		table {
+			border-collapse: collapse;
+		}
+
+		table, th, td {
+			border: 1px solid black;
+		}
 
         .boxsizingBorder {
             -webkit-box-sizing: border-box;
@@ -37,10 +41,7 @@
 
 </head>
 <body>
-    <div id="container">
-        <!--div id="htmleditor"></div-->
-    </div>
-	<table>
+	<table style="margin: auto;">
 		<tr>
 			<th colspan=2><%=nome%></th>
 		</tr>
@@ -51,16 +52,16 @@
                     <button id="salvar" type="button" onclick="salvar()"> Salvar </button>
                     <button type="button" onclick="executar()"> Executar </button>
                 </div>
-                <div id="htmleditor" style="width: 600px; height: 700px"><%=arquivo%></div>
+                <div id="htmleditor" style="width: 640px; height: 700px"><%=arquivo%></div>
                 <!--textarea id="codigo" rows="50" style="width: 480px; white-space: pre;"></textarea-->
             </td>
 
             <td>
                 Entrada <br>
-                <textarea id="entrada" rows="20" style="width: 360px;"></textarea>
+                <textarea id="entrada" rows="20" style="width: 480px;"></textarea>
                 <br>
                 Saida <br>
-                <textarea id="saida" rows="20" style="width: 360px;" readonly></textarea>
+                <textarea id="saida" rows="20" wrap='off' style="width: 480px" readonly></textarea>
             </td>
 		</tr>
     </table>
