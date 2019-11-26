@@ -244,7 +244,7 @@ app.all("/salvar", express.json(), function(request, response) {
     } else {
       diretorio.salvar(email, nome, arquivo, (ret) => {
         if(ret.erro) {
-          console.log(ret.data);
+          //console.log(ret.data);
           response.status(500).json({
             info: ret.data,
           });
@@ -353,7 +353,7 @@ app.post("/home/novo", bodyParser.json(), bodyParser.urlencoded({ extended: true
   let email = request.session.data.usuario.email;
   let nome = request.body.arquivo;
 
-  console.log(nome);
+  //console.log(nome);
   
   banco.upload(id_usuario, nome, function(ret) {
     if(ret.erro) {

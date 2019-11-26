@@ -7,7 +7,7 @@ RUN mkdir -p /home/node/app/src && chown -R node:node /home/node/app/src
 WORKDIR /home/node/app
 COPY src/* ./src/
 COPY package.json .
-RUN npm install -g nodemon && npm install /home/node/app/
+RUN npm install -g nodemon && npm install
 COPY --chown=node:node . .
 USER node
 
